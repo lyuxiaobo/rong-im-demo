@@ -7,5 +7,5 @@ package com.lemon.im.utils;
  * @date 2021/8/14
  */
 public class UrlFactory {
-    public static String BaseUrl = "http://10.61.4.20:8081";
+    public static String BaseUrl = "http://192.168.1.12:8080";
 }

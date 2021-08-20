@@ -1,9 +1,11 @@
 package com.lemon.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.Date;
 
 /**
  * 用户实体类
@@ -12,45 +14,23 @@ import javax.persistence.Id;
  * @create 2021/8/19 19:44
  */
 @Entity
+@Table(name = "user")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+    private String userId;
     private String name;
     private String password;
-
-    public User() {
-
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public User(long id, String name, String password) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-    }
+    private String token;
+    @Temporal(TemporalType.DATE)
+    private Date createTime;
+    @Temporal(TemporalType.DATE)
+    private Date updateTime;
+    private Integer phone;
+    private String imgUrl;
 }

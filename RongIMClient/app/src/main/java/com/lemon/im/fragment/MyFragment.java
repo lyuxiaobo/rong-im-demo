@@ -1,6 +1,7 @@
 package com.lemon.im.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lemon.im.R;
+import com.lemon.im.activity.LoginActivity;
 import com.lemon.im.base.BaseFragment;
+import com.lemon.im.bean.LoginResultBean;
 import com.lemon.im.utils.ActivityCollectorUtil;
 import com.lemon.im.utils.SPUtils;
 import com.lemon.im.utils.ToastUtils;
@@ -39,15 +42,16 @@ public class MyFragment extends BaseFragment {
 
     @Override
     public void loadData() {
-        tvName.setText(SPUtils.get(mContext, "username", "").toString());
+        LoginResultBean.DataBean user = SPUtils.getBean(mContext, "user", LoginResultBean.DataBean.class);
+        tvName.setText(user.getUserId());
     }
 
     @Override
     public void initListener() {
         tvLogout.setmOnLSettingItemClick(isChecked -> {
-            SPUtils.remove(mContext, "username");
+            SPUtils.remove(mContext, "user");
             ActivityCollectorUtil.finishAllActivity();
-//            startActivity(new Intent(mContext, LoginActivity.class));
+            startActivity(new Intent(mContext, LoginActivity.class));
         });
 
         tvPersonalInfo.setmOnLSettingItemClick(isChecked -> {

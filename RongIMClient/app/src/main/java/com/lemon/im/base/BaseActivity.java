@@ -213,7 +213,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-//                L.out(finalWhat + "请求结果:__", response.body());
+
                 Log.i(TAG, "onSuccess: " + response.code());
                 if (clazz == null) {
                     okResponseSuccess(finalWhat, response.code());

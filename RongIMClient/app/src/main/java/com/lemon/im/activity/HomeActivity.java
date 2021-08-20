@@ -6,9 +6,13 @@ import android.widget.RadioGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.lemon.im.R;
 import com.lemon.im.base.BaseActivity;
+import com.lemon.im.bean.LoginResultBean;
+import com.lemon.im.fragment.AddressBookFragment;
 import com.lemon.im.fragment.MyFragment;
+import com.lemon.im.utils.SPUtils;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.conversationlist.ConversationListFragment;
@@ -20,7 +24,7 @@ public class HomeActivity extends BaseActivity {
     ConversationListFragment conversationListFragment = null;
     private FrameLayout fl;
     private RadioGroup rg;
-    private Fragment myFm = null;
+    private Fragment myFm = null, addressBookFm = null;
 
     @Override
     public int getContentViewResource() {
@@ -31,14 +35,17 @@ public class HomeActivity extends BaseActivity {
     protected void initView() {
         fl = findViewById(R.id.fl);
         rg = findViewById(R.id.rg);
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.statusBarDarkFont(true).init();
     }
 
     @Override
     protected void initData() {
         rg.setOnCheckedChangeListener(new RadioGroupOnCheckedChangeListener());
         rg.check(R.id.rb_home);
+        LoginResultBean.DataBean user = SPUtils.getBean(mContext, "user", LoginResultBean.DataBean.class);
 
-        String token = "";
+        String token = user.getToken();
         RongIM.connect(token, new RongIMClient.ConnectCallback() {
             @Override
             public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus code) {
@@ -73,9 +80,9 @@ public class HomeActivity extends BaseActivity {
                 getSupportFragmentManager().beginTransaction().hide(conversationListFragment).commit();
 
             }
-            /*if (staFm != null) {
-                getSupportFragmentManager().beginTransaction().hide(staFm).commit();
-            }*/
+            if (addressBookFm != null) {
+                getSupportFragmentManager().beginTransaction().hide(addressBookFm).commit();
+            }
             if (myFm != null) {
                 getSupportFragmentManager().beginTransaction().hide(myFm).commit();
             }
@@ -88,14 +95,14 @@ public class HomeActivity extends BaseActivity {
                         getSupportFragmentManager().beginTransaction().show(conversationListFragment).commit();
                     }
                     break;
-                /*case R.id.rb_statistic:
-                    if (staFm == null) {
-                        staFm = new StatisticFragment();
-                        getSupportFragmentManager().beginTransaction().add(R.id.fl, staFm).commit();
+                case R.id.rb_statistic:
+                    if (addressBookFm == null) {
+                        addressBookFm = new AddressBookFragment();
+                        getSupportFragmentManager().beginTransaction().add(R.id.fl, addressBookFm).commit();
                     } else {
-                        getSupportFragmentManager().beginTransaction().show(staFm).commit();
+                        getSupportFragmentManager().beginTransaction().show(addressBookFm).commit();
                     }
-                    break;*/
+                    break;
                 case R.id.rb_my:
                     if (myFm == null) {
                         myFm = new MyFragment();

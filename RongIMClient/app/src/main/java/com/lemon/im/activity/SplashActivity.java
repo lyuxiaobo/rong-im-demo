@@ -9,6 +9,7 @@ import androidx.cardview.widget.CardView;
 
 import com.lemon.im.R;
 import com.lemon.im.base.BaseActivity;
+import com.lemon.im.bean.LoginResultBean;
 import com.lemon.im.utils.SPUtils;
 
 
@@ -64,9 +65,9 @@ public class SplashActivity extends BaseActivity {
     }
 
     public void isLogin() {
-        if (SPUtils.get(mContext, "username", "").equals("")) {
+        if (SPUtils.getBean(mContext, "user", LoginResultBean.DataBean.class) == null) {
 
-            startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
         } else {
             startActivity(new Intent(SplashActivity.this, HomeActivity.class));
         }
