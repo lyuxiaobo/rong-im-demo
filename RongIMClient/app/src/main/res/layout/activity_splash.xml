@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/dp15"
+    tools:context=".activity.SplashActivity">
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp100"
+        android:layout_marginTop="@dimen/dp10"
+        android:src="@mipmap/logo" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv"
+        android:layout_width="@dimen/dp50"
+        android:layout_height="@dimen/dp50"
+        android:layout_gravity="right"
+        android:visibility="invisible"
+        app:cardCornerRadius="@dimen/dp25">
+
+        <TextView
+            android:id="@+id/tvCountTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="0s"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp15" />
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>
