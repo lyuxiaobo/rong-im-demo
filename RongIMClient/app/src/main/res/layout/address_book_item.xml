@@ -1,55 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/contact_rl"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:orientation="horizontal"
+    android:descendantFocusability="blocksDescendants"
     android:gravity="center_vertical"
-    android:id="@+id/contact_rl"
-    android:descendantFocusability="blocksDescendants">
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:visibility="invisible" />
 
     <ImageView
-        android:layout_centerVertical="true"
+        android:id="@+id/pic"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
-        android:id="@+id/pic" />
+        android:layout_centerVertical="true" />
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:orientation="vertical"
         android:layout_toLeftOf="@id/checkbox"
         android:layout_toRightOf="@id/pic"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:gravity="bottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtName"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_marginTop="13dp"
-            android:layout_centerVertical="true" />
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:textSize="12sp"
                 android:id="@+id/message_tv_itemHosp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="12sp" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="13dp"
+            android:gravity="bottom"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
     </LinearLayout>
 
-    <CheckBox
-        android:layout_width="30dp"
-        android:layout_height="20dp"
-        android:id="@+id/checkbox"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:visibility="invisible" />
+    <View
+        style="@style/Line_e0e0e0_Horizontal"
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>

@@ -21,7 +21,7 @@ import io.rong.imlib.RongIMClient;
 public class HomeActivity extends BaseActivity {
 
     private static final String TAG = "HomeActivity";
-    ConversationListFragment conversationListFragment = null;
+    private ConversationListFragment conversationListFragment;
     private FrameLayout fl;
     private RadioGroup rg;
     private Fragment myFm = null, addressBookFm = null;

@@ -22,6 +22,9 @@ import com.lemon.im.bean.AllUserResultBean;
 import com.lemon.im.utils.GsonUtils;
 import com.lemon.im.utils.UrlFactory;
 
+import io.rong.imkit.utils.RouteUtils;
+import io.rong.imlib.model.Conversation;
+
 
 /**
  * Ccb simple {@link } subclass.
@@ -29,13 +32,14 @@ import com.lemon.im.utils.UrlFactory;
 public class AddressBookFragment extends BaseCacheFragment {
     private static final String TAG = "TaskTodoFragment";
     private TasksAdapter tasksAdapter;
+    private RecyclerView recyclerView;
+    private int start = 0;
+    private int size = 10;
 
     @Override
     protected View initContentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_address_book, container, false);
     }
-
-    private RecyclerView recyclerView;
 
     @Override
     public void initView(View view) {
@@ -44,6 +48,11 @@ public class AddressBookFragment extends BaseCacheFragment {
         tasksAdapter = new TasksAdapter(R.layout.address_book_item);
         recyclerView.setAdapter(tasksAdapter);
 
+        isTitleBar(true, view.findViewById(R.id.address_book_title));
+        findViewById(R.id.tvTitleBack).setVisibility(View.INVISIBLE);
+        ((TextView) findViewById(R.id.tvTitleBar)).setText("通讯录");
+
+
         TextView tv = new TextView(getActivity());
         tv.setGravity(Gravity.CENTER);
         tv.setText("暂无数据!");
@@ -51,9 +60,16 @@ public class AddressBookFragment extends BaseCacheFragment {
         tasksAdapter.setEmptyView(tv);
 
         tasksAdapter.setOnItemClickListener((adapter, view1, position) -> {
-            /*Intent intent = new Intent(mContext, FinishTaskActivity.class);
-            intent.putExtra("taskId", tasksAdapter.getData().get(position).getId());
-            startActivity(intent);*/
+            Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
+            String targetId = tasksAdapter.getData().get(position).getUserId();
+            String title = tasksAdapter.getData().get(position).getUserId();
+            Bundle bundle = new Bundle();
+            if (!TextUtils.isEmpty(title)) {
+                bundle.putString(RouteUtils.TITLE, title); //会话页面标题
+//                bundle.putLong(RouteUtils.INDEX_MESSAGE_TIME, 0L); //打开会话页面时的默认跳转位置，如果不配置将跳转到消息列表底部
+            }
+            RouteUtils.routeToConversationActivity(getContext(), conversationType, targetId, bundle);
+
         });
     }
 
@@ -67,10 +83,6 @@ public class AddressBookFragment extends BaseCacheFragment {
     public void loadData() {
         loadHttpData();
     }
-
-    private int start = 0;
-    private int size = 10;
-
 
     public void loadHttpData() {
         okGetRequest("getUser", UrlFactory.BaseUrl + "/user/all");
@@ -134,7 +146,7 @@ public class AddressBookFragment extends BaseCacheFragment {
 
         @Override
         protected void convert(BaseViewHolder helper, AllUserResultBean.DataBean item) {
-            helper.setText(R.id.txtName, "用户ID：" + item.getUserId())
+            helper.setText(R.id.txtName, item.getUserId())
                     .setText(R.id.message_tv_itemHosp, "创建时间：" + item.getCreateTime());
             Glide.with(mContext).load("http://www.rongcloud.cn/images/logo.png").centerCrop().into((ImageView) helper.getView(R.id.pic));
         }

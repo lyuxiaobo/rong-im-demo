@@ -13,6 +13,11 @@ public class LoginRequestBean {
     private Integer phone;
     private String imgUrl;
 
+    public LoginRequestBean(String userId, String password) {
+        this.userId = userId;
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return "LoginRequestBean{" +
@@ -24,11 +29,6 @@ public class LoginRequestBean {
                 ", phone=" + phone +
                 ", imgUrl='" + imgUrl + '\'' +
                 '}';
-    }
-
-    public LoginRequestBean(String userId, String password) {
-        this.userId = userId;
-        this.password = password;
     }
 
     public Long getId() {
