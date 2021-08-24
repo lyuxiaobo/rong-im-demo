@@ -33,7 +33,7 @@ public class LoginActivity extends BaseActivity {
         login = findViewById(R.id.btn_login);
         name = findViewById(R.id.et_name);
         password = findViewById(R.id.et_password);
-        mImmersionBar.titleBar(R.id.toolbar).keyboardEnable(true).init();
+        mImmersionBar.titleBar(R.id.toolbar).statusBarDarkFont(true, 0.2f).keyboardEnable(true).init();
         login.setOnClickListener(v -> {
             if (name.getText().toString().equals("") || password.getText().toString().equals("")) {
                 ToastUtils.showToast(getApplicationContext(), "id或密码不能为空！");

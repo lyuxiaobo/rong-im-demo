@@ -3,7 +3,7 @@ package com.lemon.controller;
 import com.lemon.entity.CommonResult;
 import com.lemon.entity.User;
 import com.lemon.service.UserService;
-import com.lemon.util.GetToken;
+import com.lemon.util.Token;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class UserController {
             log.info(oneUser.get().toString());
             if (user.getPassword().equals(oneUser.get().getPassword())) {
                 if (oneUser.get().getToken() == null) {
-                    oneUser.get().setToken(GetToken.getToken(user.getUserId(), user.getUserId()));
+                    oneUser.get().setToken(Token.getToken(user.getUserId(), user.getUserId()));
                     oneUser.get().setUpdateTime(new Date());
                     userService.saveUser(oneUser.get());
                 }
@@ -49,13 +49,16 @@ public class UserController {
     @PostMapping("/user/register")
     public CommonResult register(@RequestBody User user) {
         log.info(user.toString());
-        if (user.getPassword() != null && user.getUserId() != null) {
+        Optional<User> oneUser = userService.getOneUser(user.getUserId());
+        if (!oneUser.isPresent()) {
             user.setCreateTime(new Date());
             user.setUpdateTime(new Date());
-            userService.saveUser(user);
-            return CommonResult.success(null);
+            User user1 = userService.saveUser(user);
+            user1.setName("用户" + user1.getId());
+            userService.saveUser(user1);
+            return CommonResult.success(user1);
         } else {
-            return CommonResult.fail(null);
+            return new CommonResult(400, "该用户ID已存在，请重新输入");
         }
     }
 
@@ -63,6 +66,5 @@ public class UserController {
     public CommonResult getAllUser() {
         return CommonResult.success(userService.findAll());
     }
-
 
 }

@@ -52,7 +52,6 @@ public class AddressBookFragment extends BaseCacheFragment {
         findViewById(R.id.tvTitleBack).setVisibility(View.INVISIBLE);
         ((TextView) findViewById(R.id.tvTitleBar)).setText("通讯录");
 
-
         TextView tv = new TextView(getActivity());
         tv.setGravity(Gravity.CENTER);
         tv.setText("暂无数据!");
@@ -146,7 +145,7 @@ public class AddressBookFragment extends BaseCacheFragment {
 
         @Override
         protected void convert(BaseViewHolder helper, AllUserResultBean.DataBean item) {
-            helper.setText(R.id.txtName, item.getUserId());
+            helper.setText(R.id.txtName, item.getName() == null ? item.getUserId() : item.getName());
             Glide.with(mContext).load("https://img1.baidu.com/it/u=504609824,3604971623&fm=26&fmt=auto&gp=0.jpg").centerCrop().into((ImageView) helper.getView(R.id.pic));
         }
     }

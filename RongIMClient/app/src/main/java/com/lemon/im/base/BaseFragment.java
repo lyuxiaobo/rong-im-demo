@@ -12,7 +12,6 @@ import androidx.annotation.IdRes;
 import androidx.fragment.app.Fragment;
 
 import com.gyf.immersionbar.ImmersionBar;
-import com.lemon.im.R;
 import com.lemon.im.utils.CbLoadingDialog;
 import com.lemon.im.utils.GsonUtils;
 import com.lemon.im.utils.ToastUtils;
@@ -55,7 +54,7 @@ public abstract class BaseFragment extends Fragment {
     public void isTitleBar(boolean is, View v) {
         if (is) {
             mImmersionBar = ImmersionBar.with(this);
-            mImmersionBar.titleBarMarginTop(v).statusBarColor(R.color.white).statusBarDarkFont(true, 0.2f).init();
+            mImmersionBar.titleBarMarginTop(v).statusBarDarkFont(true, 0.2f).init();
         }
     }
 

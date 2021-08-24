@@ -37,7 +37,7 @@ public class LoginResultBean {
     public static class DataBean {
         private int id;
         private String userId;
-        private Object name;
+        private String name;
         private String password;
         private String token;
         private String createTime;
@@ -61,11 +61,11 @@ public class LoginResultBean {
             this.userId = userId;
         }
 
-        public Object getName() {
+        public String getName() {
             return name;
         }
 
-        public void setName(Object name) {
+        public void setName(String name) {
             this.name = name;
         }
 

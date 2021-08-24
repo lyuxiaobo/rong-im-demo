@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.lemon.im.R;
 import com.lemon.im.activity.LoginActivity;
 import com.lemon.im.base.BaseFragment;
@@ -25,6 +27,7 @@ public class MyFragment extends BaseFragment {
     private static final String TAG = "MyFragment";
     private LSettingItem tvLogout, tvPersonalInfo, tvSet, tvVersionUpdate;
     private TextView tvName;
+    private ImageView photo;
 
     @Override
     protected View initContentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,12 +41,14 @@ public class MyFragment extends BaseFragment {
         tvName = view.findViewById(R.id.tvName);
         tvVersionUpdate = view.findViewById(R.id.tvVersionUpdate);
         tvSet = view.findViewById(R.id.tvSet);
+        photo= view.findViewById(R.id.ivPhoto);
     }
 
     @Override
     public void loadData() {
         LoginResultBean.DataBean user = SPUtils.getBean(mContext, "user", LoginResultBean.DataBean.class);
-        tvName.setText(user.getUserId());
+        tvName.setText(user.getName());
+        Glide.with(mContext).load("https://img1.baidu.com/it/u=504609824,3604971623&fm=26&fmt=auto&gp=0.jpg").centerCrop().into(photo);
     }
 
     @Override

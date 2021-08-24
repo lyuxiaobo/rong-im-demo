@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 
+import com.gyf.immersionbar.BarHide;
 import com.lemon.im.R;
 import com.lemon.im.base.BaseActivity;
 import com.lemon.im.bean.LoginResultBean;
@@ -34,11 +35,12 @@ public class SplashActivity extends BaseActivity {
     protected void initView() {
         cv = findViewById(R.id.cv);
         tvCountTime = findViewById(R.id.tvCountTime);
+        mImmersionBar.hideBar(BarHide.FLAG_HIDE_STATUS_BAR).init();
     }
 
     @Override
     protected void initData() {
-        startSplash();
+        isLogin();
     }
 
     private void startSplash() {
