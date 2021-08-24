@@ -11,20 +11,20 @@ import com.lemon.im.R;
 import com.lemon.im.base.BaseActivity;
 import com.lemon.im.bean.LoginResultBean;
 import com.lemon.im.fragment.AddressBookFragment;
+import com.lemon.im.fragment.MyConversationFragment;
 import com.lemon.im.fragment.MyFragment;
 import com.lemon.im.utils.SPUtils;
 
 import io.rong.imkit.RongIM;
-import io.rong.imkit.conversationlist.ConversationListFragment;
 import io.rong.imlib.RongIMClient;
 
 public class HomeActivity extends BaseActivity {
 
     private static final String TAG = "HomeActivity";
-    private ConversationListFragment conversationListFragment;
     private FrameLayout fl;
     private RadioGroup rg;
     private Fragment myFm = null, addressBookFm = null;
+    private MyConversationFragment myConversationFragment;
 
     @Override
     public int getContentViewResource() {
@@ -76,9 +76,9 @@ public class HomeActivity extends BaseActivity {
     private final class RadioGroupOnCheckedChangeListener implements RadioGroup.OnCheckedChangeListener {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-            if (conversationListFragment != null) {
-                getSupportFragmentManager().beginTransaction().hide(conversationListFragment).commit();
 
+            if (myConversationFragment != null) {
+                getSupportFragmentManager().beginTransaction().hide(myConversationFragment).commit();
             }
             if (addressBookFm != null) {
                 getSupportFragmentManager().beginTransaction().hide(addressBookFm).commit();
@@ -88,11 +88,11 @@ public class HomeActivity extends BaseActivity {
             }
             switch (checkedId) {
                 case R.id.rb_home:
-                    if (conversationListFragment == null) {
-                        conversationListFragment = new ConversationListFragment();
-                        getSupportFragmentManager().beginTransaction().add(R.id.fl, conversationListFragment).commit();
+                    if (myConversationFragment == null) {
+                        myConversationFragment = new MyConversationFragment();
+                        getSupportFragmentManager().beginTransaction().add(R.id.fl, myConversationFragment).commit();
                     } else {
-                        getSupportFragmentManager().beginTransaction().show(conversationListFragment).commit();
+                        getSupportFragmentManager().beginTransaction().show(myConversationFragment).commit();
                     }
                     break;
                 case R.id.rb_statistic:

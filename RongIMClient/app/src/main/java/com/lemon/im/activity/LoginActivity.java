@@ -35,6 +35,10 @@ public class LoginActivity extends BaseActivity {
         password = findViewById(R.id.et_password);
         mImmersionBar.titleBar(R.id.toolbar).keyboardEnable(true).init();
         login.setOnClickListener(v -> {
+            if (name.getText().toString().equals("") || password.getText().toString().equals("")) {
+                ToastUtils.showToast(getApplicationContext(), "id或密码不能为空！");
+                return;
+            }
             LoginRequestBean user = new LoginRequestBean(name.getText().toString(), password.getText().toString());
             Log.i(TAG, "initView: " + user);
             okPostRequest("login", UrlFactory.BaseUrl + "/user/login", GsonUtils.toJson(user), LoginResultBean.class, "正在登录……", true);

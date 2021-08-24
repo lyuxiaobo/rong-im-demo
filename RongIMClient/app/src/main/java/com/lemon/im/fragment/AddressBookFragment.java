@@ -146,9 +146,8 @@ public class AddressBookFragment extends BaseCacheFragment {
 
         @Override
         protected void convert(BaseViewHolder helper, AllUserResultBean.DataBean item) {
-            helper.setText(R.id.txtName, item.getUserId())
-                    .setText(R.id.message_tv_itemHosp, "创建时间：" + item.getCreateTime());
-            Glide.with(mContext).load("http://www.rongcloud.cn/images/logo.png").centerCrop().into((ImageView) helper.getView(R.id.pic));
+            helper.setText(R.id.txtName, item.getUserId());
+            Glide.with(mContext).load("https://img1.baidu.com/it/u=504609824,3604971623&fm=26&fmt=auto&gp=0.jpg").centerCrop().into((ImageView) helper.getView(R.id.pic));
         }
     }
 

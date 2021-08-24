@@ -21,7 +21,6 @@ public class MyConversationFragment extends BaseCacheFragment {
         isTitleBar(true, view.findViewById(R.id.conversation_title));
         findViewById(R.id.tvTitleBack).setVisibility(View.INVISIBLE);
         ((TextView) findViewById(R.id.tvTitleBar)).setText("聊天");
-
     }
 
     @Override

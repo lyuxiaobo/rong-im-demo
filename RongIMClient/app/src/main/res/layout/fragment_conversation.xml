@@ -2,14 +2,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <include
+        android:id="@+id/conversation_title"
+        layout="@layout/titlebar" />
     <fragment
+        android:id="@+id/conversation_rong"
         android:name="io.rong.imkit.conversationlist.ConversationListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <include
-        android:id="@+id/conversation_title"
-        layout="@layout/titlebar" />
+
 </LinearLayout>
