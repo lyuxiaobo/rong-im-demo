@@ -18,6 +18,12 @@ public class LoginRequestBean {
         this.password = password;
     }
 
+    public LoginRequestBean(String userId, String name, String password) {
+        this.userId = userId;
+        this.name = name;
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return "LoginRequestBean{" +

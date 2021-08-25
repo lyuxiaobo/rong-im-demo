@@ -4,7 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@drawable/shape_login"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:title="登录"
+        app:titleTextColor="@android:color/white" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -55,7 +62,7 @@
                             android:layout_marginTop="12dp"
                             android:layout_marginBottom="12dp"
                             android:alpha="0.4"
-                            android:text="用户名"
+                            android:text="用户ID"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
                         <EditText
@@ -64,7 +71,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginStart="14dp"
                             android:background="@null"
-                            android:hint="请输入用户名"
+                            android:hint="请输入ID"
                             android:textColor="@color/purple_200"
                             android:textSize="14sp" />
 
@@ -132,24 +139,18 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/tv_forget_password"
+                android:id="@+id/tv_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="30dp"
-                android:text="登录帮助"
+                android:text="注册用户"
                 android:textColor="#333333"
+                android:padding="@dimen/dp5"
                 android:textSize="@dimen/sp_14" />
 
         </LinearLayout>
     </ScrollView>
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@drawable/shape_login"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:title="登录"
-        app:titleTextColor="@android:color/white" />
+
 </LinearLayout>

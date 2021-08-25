@@ -54,17 +54,37 @@ public class UserController {
             user.setCreateTime(new Date());
             user.setUpdateTime(new Date());
             User user1 = userService.saveUser(user);
-            user1.setName("用户" + user1.getId());
-            userService.saveUser(user1);
+            if (user.getName() == null) {
+                user1.setName("用户" + user1.getId());
+                userService.saveUser(user1);
+            }
             return CommonResult.success(user1);
         } else {
             return new CommonResult(400, "该用户ID已存在，请重新输入");
         }
     }
 
+    /**
+     * 用户通讯录中的用户列表
+     *
+     * @return
+     */
     @GetMapping("/user/all")
     public CommonResult getAllUser() {
         return CommonResult.success(userService.findAll());
+    }
+    @PostMapping("/user/update")
+    public CommonResult update(@RequestBody User user) {
+        log.info(user.toString());
+        Optional<User> oneUser = userService.getOneUser(user.getUserId());
+        if (!oneUser.isPresent()) {
+            user.setUpdateTime(new Date());
+            oneUser.get().setName(user.getName());
+            User user1 = userService.saveUser(user);
+            return CommonResult.success(user1);
+        } else {
+            return new CommonResult(400, "该用户ID已存在，请重新输入");
+        }
     }
 
 }

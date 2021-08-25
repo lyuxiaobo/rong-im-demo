@@ -1,6 +1,7 @@
 package com.lemon.service;
 
 import com.lemon.entity.User;
+import com.lemon.entity.UserResponseBean;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,9 +17,9 @@ public interface UserService {
      *
      * @param user
      */
-    void saveUser(User user);
+    User saveUser(User user);
 
     Optional<User> getOneUser(String userId);
 
-    List<User> findAll();
+    List<UserResponseBean> findAll();
 }

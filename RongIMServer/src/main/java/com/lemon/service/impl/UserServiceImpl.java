@@ -1,11 +1,13 @@
 package com.lemon.service.impl;
 
 import com.lemon.entity.User;
+import com.lemon.entity.UserResponseBean;
 import com.lemon.repository.UserRepository;
 import com.lemon.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +21,9 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public void saveUser(User user) {
-        userRepository.save(user);
+    public User saveUser(User user) {
+        User save = userRepository.save(user);
+        return save;
     }
 
     @Override
@@ -31,8 +34,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
+    public List<UserResponseBean> findAll() {
         List<User> all = userRepository.findAll();
-        return all;
+        List<UserResponseBean> userResponseBeanList = new ArrayList<>();
+        all.forEach(user -> {
+            userResponseBeanList.add(new UserResponseBean(user.getId(), user.getUserId(), user.getName(), user.getImgUrl()));
+        });
+        return userResponseBeanList;
     }
 }

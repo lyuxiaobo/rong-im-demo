@@ -13,12 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.gyf.immersionbar.ImmersionBar;
 import com.lemon.im.R;
 import com.lemon.im.utils.ActivityCollectorUtil;
-import com.lemon.im.utils.CbLoadingDialog;
 import com.lemon.im.utils.GsonUtils;
 import com.lemon.im.utils.ToastUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.util.List;
 
@@ -33,7 +33,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     public Context mContext;
     public Bundle savedInstanceState;
     public ImmersionBar mImmersionBar;
-    private CbLoadingDialog mProgressDialog;
+
+    private QMUITipDialog.Builder builder;
+    private QMUITipDialog qmuiTipDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -282,20 +284,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void showProgressDialog(String msg) {
-        if (this.mProgressDialog == null) {
-            this.mProgressDialog = new CbLoadingDialog(mContext);
+        if (this.qmuiTipDialog == null) {
+            qmuiTipDialog = new QMUITipDialog.Builder(mContext).setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING).setTipWord("正在加载!!").create();
         }
-        if (!TextUtils.isEmpty(msg)) {
-            this.mProgressDialog.setMessage(msg);
-        } else {
-            this.mProgressDialog.setMessage("");
-        }
-        this.mProgressDialog.show();
+        this.qmuiTipDialog.show();
     }
 
     public void dismissProgressDialog() {
-        if (this.mProgressDialog != null) {
-            this.mProgressDialog.dismiss();
+        if (this.qmuiTipDialog != null) {
+            this.qmuiTipDialog.dismiss();
         }
     }
 

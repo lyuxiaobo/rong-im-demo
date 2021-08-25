@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.lemon.im.R;
 import com.lemon.im.base.BaseActivity;
@@ -21,6 +22,7 @@ public class LoginActivity extends BaseActivity {
     private Button login;
     private EditText name;
     private EditText password;
+    private TextView tv_register;
 
     @Override
     public int getContentViewResource() {
@@ -33,6 +35,7 @@ public class LoginActivity extends BaseActivity {
         login = findViewById(R.id.btn_login);
         name = findViewById(R.id.et_name);
         password = findViewById(R.id.et_password);
+        tv_register = findViewById(R.id.tv_register);
         mImmersionBar.titleBar(R.id.toolbar).statusBarDarkFont(true, 0.2f).keyboardEnable(true).init();
         login.setOnClickListener(v -> {
             if (name.getText().toString().equals("") || password.getText().toString().equals("")) {
@@ -43,6 +46,9 @@ public class LoginActivity extends BaseActivity {
             Log.i(TAG, "initView: " + user);
             okPostRequest("login", UrlFactory.BaseUrl + "/user/login", GsonUtils.toJson(user), LoginResultBean.class, "正在登录……", true);
 
+        });
+        tv_register.setOnClickListener(v -> {
+            start(RegisterActivity.class);
         });
     }
 

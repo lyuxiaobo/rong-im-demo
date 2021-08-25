@@ -40,11 +40,6 @@ public class AllUserResultBean {
         private int id;
         private String userId;
         private String name;
-        private String password;
-        private String token;
-        private String createTime;
-        private String updateTime;
-        private String phone;
         private String imgUrl;
 
         public int getId() {
@@ -71,45 +66,6 @@ public class AllUserResultBean {
             this.name = name;
         }
 
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public String getToken() {
-            return token;
-        }
-
-        public void setToken(String token) {
-            this.token = token;
-        }
-
-        public String getCreateTime() {
-            return createTime;
-        }
-
-        public void setCreateTime(String createTime) {
-            this.createTime = createTime;
-        }
-
-        public String getUpdateTime() {
-            return updateTime;
-        }
-
-        public void setUpdateTime(String updateTime) {
-            this.updateTime = updateTime;
-        }
-
-        public String getPhone() {
-            return phone;
-        }
-
-        public void setPhone(String phone) {
-            this.phone = phone;
-        }
 
         public String getImgUrl() {
             return imgUrl;
