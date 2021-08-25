@@ -23,6 +23,9 @@ public class LoginRequestBean {
         this.name = name;
         this.password = password;
     }
+    public LoginRequestBean() {
+
+    }
 
     @Override
     public String toString() {

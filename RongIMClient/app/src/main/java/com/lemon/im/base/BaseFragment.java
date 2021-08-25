@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,19 +19,21 @@ import com.lemon.im.utils.ToastUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.util.List;
 
 
 public abstract class BaseFragment extends Fragment {
-
+    private static final String TAG = "BaseFragment";
     public ImmersionBar mImmersionBar;
     public Context mContext;
     public View rootView;
     protected LayoutInflater inflater;
     private boolean isVisible;                  //是否可见状态
     private CbLoadingDialog mProgressDialog;
-
+    private QMUITipDialog.Builder builder;
+    private QMUITipDialog qmuiTipDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -185,6 +188,63 @@ public abstract class BaseFragment extends Fragment {
     public void okPostRequest(final String what, final String httpurl, HttpParams params, final Class clazz) {
         okPostRequest(what, httpurl, params, clazz, null, false);
     }
+    /**
+     * OK网络请求
+     *
+     * @param httpurl      请求URl 也用来标记
+     * @param clazz        返回的Bean对象
+     * @param DialogMsg    弹出Dialog的文字消息
+     * @param isShowDialog 是否弹出Dialog 默认弹出
+     */
+    public void okPostRequest(String what, String httpurl, String json, final Class clazz, final String DialogMsg, final boolean isShowDialog) {
+        final String url = httpurl;
+        final String finalWhat = TextUtils.isEmpty(what) ? url : what;
+
+        OkGo.<String>post(url).upString(json, HttpParams.MEDIA_TYPE_JSON).execute(new StringCallback() {
+            @Override
+            public void onStart(com.lzy.okgo.request.base.Request<String, ? extends com.lzy.okgo.request.base.Request> request) {
+                super.onStart(request);
+                if (isShowDialog) {
+                    showProgressDialog(DialogMsg);
+                }
+                okResponseStart(finalWhat);
+            }
+
+            @Override
+            public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+
+                Log.i(TAG, "onSuccess: " + response.code());
+                if (clazz == null) {
+                    okResponseSuccess(finalWhat, response.code());
+                } else {
+                    try {
+                        Object bean = GsonUtils.fromJson(response.body(), clazz);
+                        okResponseSuccess(finalWhat, bean);
+                    } catch (Exception e) {
+                        okResponseSuccess(finalWhat, null);
+                        ToastUtils.GsonExtremely();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(com.lzy.okgo.model.Response<String> response) {
+                super.onError(response);
+//                L.out(finalWhat + "请求结果:__", response.body());
+                Log.i(TAG, "onError: " + response.code());
+                okResponseError(finalWhat, response.body());
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                if (isShowDialog) {
+                    dismissProgressDialog();
+                }
+                okResponseFinish(finalWhat);
+            }
+        });
+    }
 
     /**
      * OK网络请求
@@ -278,13 +338,15 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void showProgressDialog(String msg) {
-        if (this.mProgressDialog == null)
-            this.mProgressDialog = new CbLoadingDialog(mContext);
-        this.mProgressDialog.show();
+        if (this.qmuiTipDialog == null) {
+            qmuiTipDialog = new QMUITipDialog.Builder(mContext).setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING).setTipWord("正在加载!!").create();
+        }
+        this.qmuiTipDialog.show();
     }
 
     public void dismissProgressDialog() {
-        if (this.mProgressDialog != null)
-            this.mProgressDialog.dismiss();
+        if (this.qmuiTipDialog != null) {
+            this.qmuiTipDialog.dismiss();
+        }
     }
 }

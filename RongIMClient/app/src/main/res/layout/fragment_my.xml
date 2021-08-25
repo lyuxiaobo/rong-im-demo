@@ -61,6 +61,13 @@
         leon:leftIcon="@drawable/setting"
 
         leon:leftText="设置" />
+    <com.leon.lib.settingview.LSettingItem
+        android:id="@+id/tvShare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        leon:leftIcon="@drawable/setting"
+
+        leon:leftText="分享" />
 
 
     <com.leon.lib.settingview.LSettingItem

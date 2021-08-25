@@ -73,17 +73,24 @@ public class UserController {
     public CommonResult getAllUser() {
         return CommonResult.success(userService.findAll());
     }
+
+    /**
+     * 更新用户信息
+     *
+     * @param user
+     * @return
+     */
     @PostMapping("/user/update")
     public CommonResult update(@RequestBody User user) {
         log.info(user.toString());
         Optional<User> oneUser = userService.getOneUser(user.getUserId());
-        if (!oneUser.isPresent()) {
+        if (oneUser.isPresent()) {
             user.setUpdateTime(new Date());
             oneUser.get().setName(user.getName());
-            User user1 = userService.saveUser(user);
+            User user1 = userService.saveUser(oneUser.get());
             return CommonResult.success(user1);
         } else {
-            return new CommonResult(400, "该用户ID已存在，请重新输入");
+            return new CommonResult(400, "该用户不存在");
         }
     }
 
