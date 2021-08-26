@@ -54,4 +54,5 @@ dependencies {
     implementation 'com.leon:lsettingviewlibrary:1.7.0'
     implementation 'com.qmuiteam:qmui:2.0.0-alpha10'
     implementation 'io.github.lucksiege:pictureselector:v2.7.3-rc07'
+    implementation('com.qianwen:update-app:3.5.2')
 }

@@ -26,9 +26,9 @@ import com.lemon.im.utils.ToastUtils;
 import com.lemon.im.utils.UrlFactory;
 import com.leon.lib.settingview.LSettingItem;
 import com.luck.picture.lib.PictureSelector;
-import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.listener.OnResultCallbackListener;
 import com.qmuiteam.qmui.skin.QMUISkinManager;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
@@ -36,8 +36,6 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.util.List;
-
-import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -78,10 +76,26 @@ public class MyFragment extends BaseFragment {
     @Override
     public void initListener() {
         photo.setOnClickListener(v -> {
-            PictureSelector.create(getActivity())
+            PictureSelector.create(this)
                     .openGallery(PictureMimeType.ofImage())
-                    .imageEngine(GlideEngine.createGlideEngine()) // Please refer to the Demo GlideEngine.java
-                    .forResult(PictureConfig.CHOOSE_REQUEST);
+                    .imageEngine(GlideEngine.createGlideEngine())
+                    .isEnableCrop(true)
+                    .maxSelectNum(1)
+                    .forResult(new OnResultCallbackListener<LocalMedia>() {
+                        @Override
+                        public void onResult(List<LocalMedia> result) {
+                            // onResult Callback
+                            result.forEach(action -> {
+                                Log.i(TAG, "onActivityResult: " + action.toString());
+                            });
+                        }
+
+                        @Override
+                        public void onCancel() {
+                            // onCancel Callback
+                        }
+                    });
+
         });
         tvLogout.setmOnLSettingItemClick(isChecked -> {
             SPUtils.remove(mContext, "user");
@@ -97,11 +111,9 @@ public class MyFragment extends BaseFragment {
 
         });
         tvVersionUpdate.setmOnLSettingItemClick(isChecked -> {
-            ToastUtils.showCenterToast(mContext, "正在开发中……");
 
         });
         tvName.setOnClickListener(v -> {
-
             QMUIDialog.EditTextDialogBuilder builder = new QMUIDialog.EditTextDialogBuilder(getActivity())
                     .setPlaceholder("请输入您的新用户名")
                     .setTitle("更改用户名")
@@ -175,25 +187,6 @@ public class MyFragment extends BaseFragment {
         okPostRequest("update", UrlFactory.BaseUrl + "/user/update", GsonUtils.toJson(loginRequestBean), LoginResultBean.class, "正在……", true);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case PictureConfig.CHOOSE_REQUEST:
-                    // onResult Callback
-                    List<LocalMedia> result = PictureSelector.obtainMultipleResult(data);
-                    result.forEach(action -> {
-                        Log.i(TAG, "onActivityResult: " + action.getPosition());
-                    });
-                    break;
-                default:
-                    break;
-            }
-        }
-
-    }
-
 
     @Override
     protected void okResponseSuccess(String whit, Object t) {
@@ -214,4 +207,6 @@ public class MyFragment extends BaseFragment {
             ToastUtils.showCenterToast(mContext, datas.getMsg());
         }
     }
+
+
 }
