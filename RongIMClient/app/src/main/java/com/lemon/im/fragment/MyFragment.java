@@ -2,6 +2,8 @@ package com.lemon.im.fragment;
 
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -120,9 +122,22 @@ public class MyFragment extends BaseFragment {
 
         });
         tvVersionUpdate.setmOnLSettingItemClick(isChecked -> {
-            updateDiy();
+            //获取当前版本号
+            PackageManager pm = getActivity().getPackageManager();
+            try {
+                PackageInfo pi = pm.getPackageInfo(getActivity().getPackageName(), PackageManager.GET_ACTIVITIES);
+                int versionCode = pi.versionCode;
+                updateApp(versionCode);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodError e) {
+                e.printStackTrace();
+            }
+
         });
-        tvName.setOnClickListener(v -> {
+        tvName.setOnClickListener(v ->
+
+        {
             QMUIDialog.EditTextDialogBuilder builder = new QMUIDialog.EditTextDialogBuilder(getActivity())
                     .setPlaceholder("请输入您的新用户名")
                     .setTitle("更改用户名")
@@ -148,7 +163,9 @@ public class MyFragment extends BaseFragment {
             });
         });
 
-        tvShare.setmOnLSettingItemClick(isChecked -> {
+        tvShare.setmOnLSettingItemClick(isChecked ->
+
+        {
             final int TAG_SHARE_WECHAT_FRIEND = 0;
             final int TAG_SHARE_WECHAT_MOMENT = 1;
             final int TAG_SHARE_WEIBO = 2;
@@ -217,14 +234,8 @@ public class MyFragment extends BaseFragment {
         }
     }
 
-    /**
-     * 自定义接口协议
-     *
-     * @param view
-     */
-    public void updateDiy() {
 
-
+    public void updateApp(int versionCode) {
         new UpdateAppManager
                 .Builder()
                 //必须设置，当前Activity
@@ -232,7 +243,7 @@ public class MyFragment extends BaseFragment {
                 //必须设置，实现httpManager接口的对象
                 .setHttpManager(new UpdateAppHttpUtil())
                 //必须设置，更新地址
-                .setUpdateUrl(UrlFactory.BaseUrl + "/version/update")
+                .setUpdateUrl(UrlFactory.BaseUrl + "/version/update?versionCode=" + versionCode)
                 //全局异常捕获
                 .handleException(new ExceptionHandler() {
                     @Override
